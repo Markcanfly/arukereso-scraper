@@ -17,7 +17,7 @@ The output for each product looks like this:
   "url": "https://www.pazaruvaj.com/mobilni-telefoni-gsm-c3277/apple/iphone-13-128gb-p706181766/",
   "id": "p706181766",
   "name": "Apple iPhone 13 128GB   Мобилни телефони (GSM)",
-  "recommendedPrice": 1,
+  "recommendedPrice": 1660,
   "offers": [
     {
       "name": "Apple iPhone 13, 128GB",
