@@ -7,7 +7,8 @@
       "title": "URL",
       "type": "string",
       "description": "The URL to scrape products from. Use this to prefilter the results.",
-      "editor": "textfield"
+      "editor": "textfield",
+      "default": "https://www.arukereso.hu/mobiltelefon-c3277/apple/"
     }
   },
   "required": []
