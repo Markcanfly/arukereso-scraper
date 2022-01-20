@@ -8,6 +8,17 @@ async function addPageUrls(requestQueue, baseUrl, nProducts) {
     }
 }
 
+function parsePrice(priceText) {
+    const regex = /([\d]+)(,[\d]+)?/gm;
+    const m = regex.exec(priceText.replaceAll(' ', ''));
+    let price = 0;
+    price += parseInt(m[1]);
+    if (m[2]) {
+        price += parseFloat('0' + m[2].replace(',', '.'));
+    }
+    return price;
+}
+
 Apify.main(async () => {
     const input = await Apify.getInput();
     const url = input.url.split('?')[0]; // Remove params
@@ -38,14 +49,13 @@ Apify.main(async () => {
                 return;
             }
             if (request.userData.label === 'product') {
-                // TODO Make price extraction work for other countries
                 $ = cheerio.load(await page.content());
                 const offers = [];
                 $('div[itemprop="offers"]').each((_, el) => { 
                     const e = $(el);
                     const offer = {
                         name: e.find('div.offer-name h4').text(),
-                        price: parseInt(e.find('[itemprop="price"]').text().split(' Ft')[0].replace(' ', '')),
+                        price: parsePrice(e.find('[itemprop="price"]').text()),
                         shop: e.find('.shopname').text(),
                         url: e.find('a.jumplink-overlay').prop('href').split('&ProductType')[0]
                     }
@@ -55,7 +65,7 @@ Apify.main(async () => {
                     url: request.url,
                     id: $('[data-product]').data('product'),
                     name: $('div.product-details h1').text().trim(),
-                    recommendedPrice: parseInt($('div.product-details .price').text().split(' Ft')[0].replace(' ','')),
+                    recommendedPrice: parsePrice($('div.product-details .price').text()),
                     offers: offers
                 })
                 return;
