@@ -1,6 +1,3 @@
 {
-	"name": "arukereso-scraper",
-	"version": "0.0",
-	"buildTag": "latest",
-	"env": null
+    "env": { "npm_config_loglevel": "silent" }
 }

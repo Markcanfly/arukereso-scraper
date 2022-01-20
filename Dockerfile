@@ -1,20 +1,11 @@
-# Dockerfile contains instructions how to build a Docker image that
-# will contain all the code and configuration needed to run your actor.
-# For a full Dockerfile reference,
-# see https://docs.docker.com/engine/reference/builder/
+# First, specify the base Docker image. You can read more about
+# the available images at https://sdk.apify.com/docs/guides/docker-images
+# You can also use any other image from Docker Hub.
+FROM apify/actor-node:16
 
-# First, specify the base Docker image. Apify provides the following
-# base images for your convenience:
-#  apify/actor-node-basic (Node.js on Alpine Linux, small and fast)
-#  apify/actor-node-chrome (Node.js + Chrome on Debian)
-#  apify/actor-node-chrome-xvfb (Node.js + Chrome + Xvfb on Debian)
-# For more information, see https://docs.apify.com/actor/build#base-images
-# Note that you can use any other image from Docker Hub.
-FROM apify/actor-node-chrome
-
-# Second, copy just package.json since it should be the only file
-# that affects "npm install" in the next step, to speed up the build
-COPY package.json ./
+# Second, copy just package.json and package-lock.json since it should be
+# the only file that affects "npm install" in the next step, to speed up the build
+COPY package*.json ./
 
 # Install NPM packages, skip optional and development dependencies to
 # keep the image small. Avoid logging too much and print the dependency
@@ -22,7 +13,7 @@ COPY package.json ./
 RUN npm --quiet set progress=false \
  && npm install --only=prod --no-optional \
  && echo "Installed NPM packages:" \
- && npm list || true \
+ && (npm list --only=prod --no-optional --all || true) \
  && echo "Node.js version:" \
  && node --version \
  && echo "NPM version:" \
@@ -31,9 +22,7 @@ RUN npm --quiet set progress=false \
 # Next, copy the remaining files and directories with the source code.
 # Since we do this after NPM install, quick build will be really fast
 # for most source file changes.
-# Note that because we are also copying the "apify_storage" directory, we
-# need to set a correct owner to make it writable, for local runs in Docker.
-COPY --chown=myuser . ./
+COPY . ./
 
 # Optionally, specify how to launch the source code of your actor.
 # By default, Apify's base Docker images define the CMD instruction
