@@ -1,0 +1,14 @@
+{
+  "title": "Input schema for the arukereso scraper.",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "message": {
+      "title": "URL",
+      "type": "string",
+      "description": "The URL to scrape products from. Use this to prefilter the results.",
+      "editor": "textfield"
+    }
+  },
+  "required": []
+}

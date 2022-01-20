@@ -1,0 +1,13 @@
+{
+  "name": "arukereso-scraper",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "apify": "^2.2.1",
+    "cheerio": "^1.0.0-rc.10",
+    "playwright": "^1.17.2"
+  },
+  "scripts": {
+    "start": "node main.js"
+  }
+}

@@ -1,0 +1,1 @@
+A scraper for the pricechecker website Arukereso.hu
