@@ -3,7 +3,7 @@
   "type": "object",
   "schemaVersion": 1,
   "properties": {
-    "message": {
+    "url": {
       "title": "URL",
       "type": "string",
       "description": "The URL to scrape products from. Use this to prefilter the results.",
@@ -11,5 +11,5 @@
       "default": "https://www.arukereso.hu/mobiltelefon-c3277/apple/"
     }
   },
-  "required": []
+  "required": [ "url" ]
 }

@@ -5,7 +5,7 @@
   "dependencies": {
     "apify": "^2.2.1",
     "cheerio": "^1.0.0-rc.10",
-    "playwright": "^1.17.2"
+    "playwright": "^1.17.1"
   },
   "scripts": {
     "start": "node main.js"
