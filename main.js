@@ -1,6 +1,5 @@
 const Apify = require('apify');
 const cheerio = require('cheerio');
-const playwright = require('playwright')
 
 async function addPageUrls(requestQueue, baseUrl, nProducts) {
     for (let i = 0; i < nProducts; i = i + 25) {
@@ -34,7 +33,7 @@ Apify.main(async () => {
         },
         handlePageFunction: async ({ page, request }) => {
             if (request.userData.label === 'home') {
-                $ = cheerio.load(await page.content());
+                let $ = cheerio.load(await page.content());
                 nProducts = parseInt($('div.category-navbar span.product-num span').text().split(' ')[0])
                 await addPageUrls(requestQueue, url, nProducts);
                 return;
@@ -49,7 +48,7 @@ Apify.main(async () => {
                 return;
             }
             if (request.userData.label === 'product') {
-                $ = cheerio.load(await page.content());
+                let $ = cheerio.load(await page.content());
                 const offers = [];
                 $('div[itemprop="offers"]').each((_, el) => { 
                     const e = $(el);
